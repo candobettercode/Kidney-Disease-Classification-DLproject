@@ -1,5 +1,6 @@
 # my gitignore added
 logs/
+*.rar
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
