@@ -7,7 +7,7 @@ __version__ = "0.0.0"
 
 REPO_NAME = "Kidney-Disease-Classification-Deep-Learning-Project"
 AUHTOR_USER_NAME = "condonettercode"
-SRC_REPO = "cnnClassifier"
+SRC_REPO = "src" # Name of local package
 AUHTOR_EMAIL = "siddhesh1199@gmail.com"
 
 setuptools.setup(
