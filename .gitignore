@@ -1,4 +1,6 @@
 # my gitignore added
+*.jpg
+
 logs/
 
 # Byte-compiled / optimized / DLL files
