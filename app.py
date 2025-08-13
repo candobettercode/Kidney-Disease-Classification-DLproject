@@ -1,3 +1,3 @@
-from src import logger
+from src import logging
 
-logger.info("Welcome to our custome log")
+logging.info("Welcome to our custome log")
