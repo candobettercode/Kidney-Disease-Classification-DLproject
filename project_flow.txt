@@ -14,3 +14,14 @@ https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view?usp=shari
 11. Updated pipeline
 12. Updated main.py
 13. created data_ingestion.ipynb
+14. updated the dvc.yaml
+15.
+16.
+17.
+18.
+19.
+20.
+21.
+22.
+23.
+

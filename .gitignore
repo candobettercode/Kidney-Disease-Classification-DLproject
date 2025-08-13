@@ -1,7 +1,9 @@
 # my gitignore added
 *.jpg
-
+*.zip
+*.rar
 logs/
+artifacts/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
