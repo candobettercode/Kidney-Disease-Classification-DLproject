@@ -15,8 +15,11 @@ https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view?usp=shari
 12. Updated main.py
 13. created data_ingestion.ipynb
 14. updated the dvc.yaml
-15.
-16.
+15. Get credentials from dagshub for mlflow
+export MLFLOW_TRACKING_URI=https://dagshub.com/candobettercode/Kidney-Disease-Classification-DLproject.mlflow  
+export MLFLOW_TRACKING_USERNAME=candobettercode
+export MLFLOW_TRACKING_PASSWORD=f9f90701ad80eb8d86431983c169510ed468adcb
+16. 
 17.
 18.
 19.
