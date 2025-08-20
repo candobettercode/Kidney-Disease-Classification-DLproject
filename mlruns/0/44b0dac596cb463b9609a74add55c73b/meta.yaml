@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/6_learning/Kidney-Disease-Classification-DLproject/mlruns/0/44b0dac596cb463b9609a74add55c73b/artifacts
+end_time: 1755684347782
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 44b0dac596cb463b9609a74add55c73b
+run_name: indecisive-shrew-838
+run_uuid: 44b0dac596cb463b9609a74add55c73b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755684308583
+status: 3
+tags: []
+user_id: Siddhesh.Masurkar
