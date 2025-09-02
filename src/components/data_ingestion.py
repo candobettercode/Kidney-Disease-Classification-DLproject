@@ -38,7 +38,7 @@ class DataIngestion:
             while attempt < retries:
                 try:
                     logging.info(f"Attempt {attempt+1}: Downloading to {zip_download_dir}")
-                    gdown.download(url, zip_download_dir, quiet=False, verify=certifi.where())
+                    gdown.download(url, zip_download_dir, quiet=False, verify=False)
 
                     if os.path.exists(zip_download_dir) and os.path.getsize(zip_download_dir) > 0:
                         logging.info(
