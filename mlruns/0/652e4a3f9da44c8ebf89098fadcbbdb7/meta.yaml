@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/6_learning/Kidney-Disease-Classification-DLproject/mlruns/0/652e4a3f9da44c8ebf89098fadcbbdb7/artifacts
+end_time: 1756785699828
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 652e4a3f9da44c8ebf89098fadcbbdb7
+run_name: invincible-perch-174
+run_uuid: 652e4a3f9da44c8ebf89098fadcbbdb7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1756785661529
+status: 3
+tags: []
+user_id: Siddhesh.Masurkar

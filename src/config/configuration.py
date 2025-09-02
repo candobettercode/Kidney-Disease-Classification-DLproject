@@ -1,7 +1,9 @@
 import os 
+from dataclasses import dataclass
+import yaml
 
 from src.constants import *
-from src.utils.common import read_yaml, create_directories
+from src.utils.common import read_yaml, create_directories, save_json
 from src.entity.config_entity import (DataIngestionConfig, 
                                       PrepareBaseModelConfig,
                                       TrainingConfig,
@@ -85,3 +87,4 @@ class ConfigurationManager:
             params_batch_size=self.params.BATCH_SIZE
         )
         return eval_config
+    

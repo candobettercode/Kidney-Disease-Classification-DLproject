@@ -3,11 +3,13 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view?usp=sharing
+  source_URL:  https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 
+# https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view?usp=sharing
 
+  
 prepare_base_model:
   root_dir: artifacts/prepare_base_model
   base_model_path: artifacts/prepare_base_model/base_model.h5

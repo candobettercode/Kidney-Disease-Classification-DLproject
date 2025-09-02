@@ -11,6 +11,7 @@ from src.utils.common import read_yaml, create_directories, save_json
 class Evaluation:
     def __init__(self, config: EvaluationConfig):
         self.config = config
+
     
     def _valid_generator(self):
 
@@ -72,4 +73,3 @@ class Evaluation:
                 mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
             else:
                 mlflow.keras.log_model(self.model, "model")
-                

@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/6_learning/Kidney-Disease-Classification-DLproject/mlruns/0/bb218066050d4355bc2103cbbe9d2a73/artifacts
+end_time: 1755749871769
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bb218066050d4355bc2103cbbe9d2a73
+run_name: unequaled-perch-589
+run_uuid: bb218066050d4355bc2103cbbe9d2a73
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755749824187
+status: 3
+tags: []
+user_id: Siddhesh.Masurkar

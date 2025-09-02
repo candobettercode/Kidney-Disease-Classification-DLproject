@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/6_learning/Kidney-Disease-Classification-DLproject/mlruns/0/aa82f17a728f4df98aa770872e83cbb1/artifacts
+end_time: 1755747358788
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: aa82f17a728f4df98aa770872e83cbb1
+run_name: angry-fawn-466
+run_uuid: aa82f17a728f4df98aa770872e83cbb1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755747321222
+status: 3
+tags: []
+user_id: Siddhesh.Masurkar

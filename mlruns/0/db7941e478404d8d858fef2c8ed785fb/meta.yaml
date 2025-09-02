@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/6_learning/Kidney-Disease-Classification-DLproject/mlruns/0/db7941e478404d8d858fef2c8ed785fb/artifacts
+end_time: 1756784971385
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: db7941e478404d8d858fef2c8ed785fb
+run_name: lyrical-ox-503
+run_uuid: db7941e478404d8d858fef2c8ed785fb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1756784926860
+status: 3
+tags: []
+user_id: Siddhesh.Masurkar
