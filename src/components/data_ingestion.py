@@ -14,7 +14,7 @@ class DataIngestion:
         self.config = config
 
     
-    def download_file(self, retries: int = 3, wait: int = 5)-> str:
+    def download_file(self)-> str:
         '''
         Downloads the dataset from Google Drive link using gdown with retries.
         Returns the path of the downloaded file.
@@ -32,33 +32,7 @@ class DataIngestion:
             logging.info(f"Preparing to download data from {dataset_url}")
 
 
-            gdown.download(prefix+file_id,zip_download_dir,quiet=False, verify=certifi.where())
-
-            attempt = 0
-            while attempt < retries:
-                try:
-                    logging.info(f"Attempt {attempt+1}: Downloading to {zip_download_dir}")
-                    gdown.download(url, zip_download_dir, quiet=False, verify=False)
-
-                    if os.path.exists(zip_download_dir) and os.path.getsize(zip_download_dir) > 0:
-                        logging.info(
-                            f"✅ Download successful! "
-                            f"File saved at {zip_download_dir} "
-                            f"({get_size(Path(zip_download_dir))})"
-                        )
-                        return zip_download_dir
-                    else:
-                        raise Exception("Downloaded file is empty!")
-
-                except Exception as e:
-                    logging.error(f"Download attempt {attempt+1} failed: {e}")
-                    attempt += 1
-                    if attempt < retries:
-                        logging.info(f"Retrying in {wait} seconds...")
-                        time.sleep(wait)
-                    else:
-                        logging.critical("❌ Max retries reached. Download failed.")
-                        raise e
+            gdown.download(prefix+file_id,zip_download_dir,quiet=False, verify=False)         
 
         except Exception as e:
             logging.error(f"Error in downloading file: {e}")

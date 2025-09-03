@@ -1,0 +1,113 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python -m src.pipeline.stage_01_data_ingestion
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 0c2fa64e6554859573fd1c6fa85c6e32
+      size: 661
+    - path: src/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: d5e980fb8099aa95b59df4706b368bdb
+      size: 894
+    outs:
+    - path: artifacts/data_ingestion/kidney
+      hash: md5
+      md5: e00ba09c8b53f18c0abf184adb3e4df5.dir
+      size: 39616017
+      nfiles: 260
+  prepare_base_model:
+    cmd: python -m src.pipeline.stage_02_prepare_base_model
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 0c2fa64e6554859573fd1c6fa85c6e32
+      size: 661
+    - path: src/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: d22d2173bd2009a7a213704ccf4f9fbc
+      size: 978
+    params:
+      params.yaml:
+        CLASSES: 2
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.04
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: e0f583c1a0c267c997e44e897fba1b2b.dir
+      size: 118054560
+      nfiles: 2
+  training:
+    cmd: python -m src.pipeline.stage_03_model_training
+    deps:
+    - path: artifacts/data_ingestion/kidney
+      hash: md5
+      md5: e00ba09c8b53f18c0abf184adb3e4df5.dir
+      size: 39616017
+      nfiles: 260
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: e0f583c1a0c267c997e44e897fba1b2b.dir
+      size: 118054560
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 0c2fa64e6554859573fd1c6fa85c6e32
+      size: 661
+    - path: src/pipeline/stage_03_model_training.py
+      hash: md5
+      md5: ba3a6853dbcc9d7a0174a37b7baea387
+      size: 898
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: 30f1f30c9c7874d1fd0fdddbbf7078ad
+      size: 59337520
+  evaluation:
+    cmd: python -m src.pipeline.stage_04_model_evaluation
+    deps:
+    - path: artifacts/data_ingestion/kidney
+      hash: md5
+      md5: e00ba09c8b53f18c0abf184adb3e4df5.dir
+      size: 39616017
+      nfiles: 260
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: 30f1f30c9c7874d1fd0fdddbbf7078ad
+      size: 59337520
+    - path: config/config.yaml
+      hash: md5
+      md5: 0c2fa64e6554859573fd1c6fa85c6e32
+      size: 661
+    - path: src/pipeline/stage_04_model_evaluation.py
+      hash: md5
+      md5: 175bad472595e0065b3c0d2b2538ce4e
+      size: 907
+    params:
+      params.yaml:
+        BATCH_SIZE: 16
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 7eb3fa3fcb4a07ae0e62b755f979de49
+      size: 58
