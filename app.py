@@ -1,57 +1,54 @@
+from flask import request, Flask, jsonify, render_template
+import os
+
+from flask_cors import CORS, cross_origin
+
+from src.utils.common import decodeImage
+from src.pipeline.prediction import PredictionPipeline
 from src import logging
-from src.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline  
-from src.pipeline.stage_02_prepare_base_model import PrepareBaseModelTrainingPipeline
-from src.pipeline.stage_03_model_training import ModelTrainingPipeline
-from src.pipeline.stage_04_model_evaluation import EvaluationPipeline
+
+os.putenv('LANG', 'en_US.UTF-8')
+os.putenv('LC_ALL', 'en_US.UTF-8')
+
+app = Flask(__name__)
+CORS(app)
+
+class ClientApp:
+    def __init__(self):
+        self.filename = "inputImage.jpg"
+        self.classifier = PredictionPipeline(self.filename)
+
+@app.route("/", methods=['GET'])
+@cross_origin()
+
+def home():
+    logging.info(f"landing page open..")
+    return render_template('a.html')
 
 
-STAGE_NAME = "Data Ingestion stage"
+@app.route("/train", methods=['GET','POST'])
+@cross_origin()
 
-try:
-    logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-    obj = DataIngestionTrainingPipeline()
-    obj.main()
-    logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-except Exception as e:
-    logging.exception(e)
-    raise e
+def trainRoute():
+    os.system("python main.py")
+    # os.system("dvc repro")
+    return "Training done successfully!!"
 
 
+@app.route("/predict",methods=['POST'])
+@cross_origin()
 
-STAGE_NAME = "Prepare base model"
-try: 
-    logging.info(f"*******************")
-    logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-    prepare_base_model = PrepareBaseModelTrainingPipeline()
-    prepare_base_model.main()
-    logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-except Exception as e:
-    logging.exception(e)
-    raise e
+def predictRoute():
+    image = request.json['image']
+    logging.info(f"image captured...")
+    decodeImage(image, clApp.filename)
+    # clApp.classifier = PredictionPipeline(clApp.filename)
+    result = clApp.classifier.predict()
+    return jsonify(result)
 
-
-
-STAGE_NAME = "Training"
-try: 
-   logging.info(f"*******************")
-   logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-   model_trainer = ModelTrainingPipeline()
-   model_trainer.main()
-   logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-except Exception as e:
-        logging.exception(e)
-        raise e
-
-
-
-STAGE_NAME = "Evaluation stage"
-try:
-   logging.info(f"*******************")
-   logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-   model_evalution = EvaluationPipeline()
-   model_evalution.main()
-   logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-
-except Exception as e:
-        logging.exception(e)
-        raise e
+if __name__ == "__main__":
+    clApp = ClientApp()
+    app.run(host='0.0.0.0', port = 8000) # for local host
+    # app.run(host='0.0.0.0', port = 8080) # for AWS
+    # app.run(host='0.0.0.0', port = 80) # for local AZURE
+    

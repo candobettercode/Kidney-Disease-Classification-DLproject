@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kidney Tumor Detection - MedScan AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F5F7FA] font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex items-center">
+    <img src="https://img.icons8.com/ios-filled/50/0A2647/upload-to-cloud.png" class="w-6 h-6 mr-2"/>
+    <h1 class="text-lg font-semibold text-[#0A2647]">MedScan AI</h1>
+    <span class="ml-2 text-gray-500">Kidney Tumor Detection</span>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="text-center py-10">
+    <h2 class="text-3xl md:text-4xl font-bold text-[#0A2647]">Kidney Tumor Detection</h2>
+    <p class="text-gray-600 mt-3 max-w-2xl mx-auto">
+      Upload a kidney MRI or CT scan image to analyze for potential tumor presence using advanced AI technology.
+    </p>
+  </section>
+
+  <!-- Upload Section -->
+  <div class="flex justify-center">
+    <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl text-center">
+      <input type="file" id="fileInput" accept="image/*" class="hidden" />
+      <label for="fileInput" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl cursor-pointer">
+        Upload Kidney Scan
+      </label>
+      <p class="text-sm text-gray-400 mt-2">Supported: JPG, PNG (Max 10MB)</p>
+
+      <!-- Preview -->
+      <div id="previewBox" class="hidden mt-6 flex items-center justify-between bg-gray-50 p-4 rounded-xl border">
+        <div class="flex items-center space-x-4">
+          <img id="previewImage" src="" class="w-20 h-20 object-cover rounded-md border">
+          <div>
+            <p id="fileName" class="font-medium text-gray-700"></p>
+            <p id="fileSize" class="text-sm text-gray-500"></p>
+            <p class="text-sm text-green-600 mt-1">✅ Ready for analysis</p>
+          </div>
+        </div>
+        <button onclick="resetUpload()" class="text-gray-400 hover:text-red-500">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analyze Button -->
+  <div class="flex justify-center mt-6">
+    <button onclick="analyzeScan()" 
+            id="analyzeBtn"
+            class="bg-[#2EC4B6] hover:bg-teal-600 text-white px-8 py-3 rounded-xl font-semibold shadow-md transition disabled:opacity-50"
+            disabled>
+      Analyze Scan
+    </button>
+  </div>
+
+  <!-- Results Section -->
+  <div id="resultSection" class="max-w-3xl mx-auto mt-8 hidden"></div>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const previewBox = document.getElementById("previewBox");
+    const previewImage = document.getElementById("previewImage");
+    const fileName = document.getElementById("fileName");
+    const fileSize = document.getElementById("fileSize");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const resultSection = document.getElementById("resultSection");
+
+    // Show file preview
+    fileInput.addEventListener("change", function() {
+      const file = this.files[0];
+      if (file) {
+        previewBox.classList.remove("hidden");
+        previewImage.src = URL.createObjectURL(file);
+        fileName.textContent = file.name;
+        fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
+        analyzeBtn.disabled = false;
+      }
+    });
+
+    function resetUpload() {
+      fileInput.value = "";
+      previewBox.classList.add("hidden");
+      analyzeBtn.disabled = true;
+      resultSection.classList.add("hidden");
+    }
+
+    async function analyzeScan() {
+      analyzeBtn.textContent = "Analyzing...";
+      analyzeBtn.disabled = true;
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = async function() {
+        const base64Image = reader.result.split(",")[1];
+
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64Image })
+        });
+
+        const result = await response.json();
+
+        // Example expected result: { label: "Tumor", confidence: 0.87 }
+        displayResult(result.label, result.confidence);
+        analyzeBtn.textContent = "Analyze Scan";
+        analyzeBtn.disabled = false;
+      };
+    }
+
+    function displayResult(label, confidence) {
+      resultSection.classList.remove("hidden");
+
+      if (label === "Tumor") {
+        resultSection.innerHTML = `
+          <div class="bg-red-50 border border-red-300 p-6 rounded-xl text-center shadow-md">
+            <h3 class="text-xl font-bold text-red-600">⚠️ Tumor Detected</h3>
+            <p class="mt-2 text-red-700">Confidence: ${(confidence*100).toFixed(0)}%</p>
+            <div class="w-full bg-gray-200 h-3 rounded-full mt-4">
+              <div class="bg-red-500 h-3 rounded-full" style="width:${confidence*100}%"></div>
+            </div>
+            <p class="mt-4 text-sm text-red-600">
+              ⚠️ Potential abnormality detected. Please consult with a radiologist or oncologist.
+            </p>
+          </div>`;
+      } else {
+        resultSection.innerHTML = `
+          <div class="bg-green-50 border border-green-300 p-6 rounded-xl text-center shadow-md">
+            <h3 class="text-xl font-bold text-green-600">✅ No Tumor Detected</h3>
+            <p class="mt-2 text-green-700">Confidence: ${(confidence*100).toFixed(0)}%</p>
+            <div class="w-full bg-gray-200 h-3 rounded-full mt-4">
+              <div class="bg-green-500 h-3 rounded-full" style="width:${confidence*100}%"></div>
+            </div>
+            <p class="mt-4 text-sm text-green-600">
+              ✅ No abnormalities detected. Continue regular medical check-ups.
+            </p>
+          </div>`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -19,7 +19,10 @@ https://drive.google.com/file/d/1dXJvoFA95jfTKY_2sbvr4pdGDCwjpfRl/view?usp=shari
 export MLFLOW_TRACKING_URI=https://dagshub.com/candobettercode/Kidney-Disease-Classification-DLproject.mlflow  
 export MLFLOW_TRACKING_USERNAME=candobettercode
 export MLFLOW_TRACKING_PASSWORD=f9f90701ad80eb8d86431983c169510ed468adcb
-16. 
+16. DVC comamand
+- dvc init 
+- dvc repro
+- dvc dag
 17.
 18.
 19.
