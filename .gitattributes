@@ -1,0 +1,10 @@
+# Force Jupyter Notebooks to be recognized as Python
+*.ipynb linguist-language=Python
+
+# Treat HTML files correctly
+*.html linguist-language=HTML
+
+# Ignore data/config files from language stats
+*.json linguist-detectable=false
+*.csv linguist-detectable=false
+*.md linguist-detectable=false
