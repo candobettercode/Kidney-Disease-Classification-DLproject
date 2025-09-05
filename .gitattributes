@@ -8,3 +8,8 @@
 *.json linguist-detectable=false
 *.csv linguist-detectable=false
 *.md linguist-detectable=false
+
+# Ignore PureBasic files from language stats
+*.pb linguist-vendored
+*.bas linguist-vendored
+*.txt linguist-vendored
